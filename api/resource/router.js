@@ -2,22 +2,21 @@
 const router = require('express').Router()
 const Resource = require('./model')
 
-router.get('/:resource_id', (req, res, next) => {
-    Resource.getresourceById(req.params.resource_id)
-    .then(resource => {
-        res.status(200).json(resource)
-    })
-    .catch(next)
+router.get('/', (req, res, next) => {
+   Resource.getResources()
+   .then(resources => {
+    res.json(resources)
+   })
+   .catch(next)
 })
 
-
-
-router.use((err, req, res, next) => { // eslint-disable-line
-    res.status(500).json({
-        customMessage: 'something went wrong inside resource router',
-        message: err.message,
-        stack: err.stack
+router.post('/', (req, res, next) => {
+    const resource = req.body
+    Resource.createResource(resource)
+    .then(resource => {
+        res.status(201).json(resource)
     })
+    .catch(next)
 })
 
 module.exports = router

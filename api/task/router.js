@@ -2,22 +2,23 @@
 const router = require('express').Router()
 const Task = require('./model')
 
-router.get('/:task_id', (req, res, next) => {
-    Task.gettaskById(req.params.task_id)
-    .then(resource => {
-        res.status(200).json(resource)
-    })
-    .catch(next)
+router.get('/', async (req, res, next) => {
+   try {
+    const getTask = await Task.getTasks()
+    res.json(getTask)
+   } catch(err) {
+    next(err)
+   }
 })
 
+router.post('/', async (req, res, next) => {
+    try {
+        const newTask = await Task.createTask(req.body)
+        res.status(201).json(newTask)
 
-
-router.use((err, req, res, next) => { // eslint-disable-line
-    res.status(500).json({
-        customMessage: 'something went wrong inside task router',
-        message: err.message,
-        stack: err.stack
-    })
+    } catch(err) {
+        next(err)
+    }
 })
 
 module.exports = router
