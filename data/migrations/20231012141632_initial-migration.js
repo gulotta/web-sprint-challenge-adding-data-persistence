@@ -22,7 +22,7 @@ exports.up = async function(knex) {
         taskTbl.increments('task_id')
         taskTbl.string('task_description', 256).notNullable()    
         taskTbl.string('task_notes', 128)
-        taskTbl.integer('task_completed').defaultTo(false)    
+        taskTbl.boolean('task_completed').defaultTo(false)    
         taskTbl.integer('project_id')
             .unsigned()
             .notNullable()

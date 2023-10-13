@@ -7,7 +7,7 @@ async function getTasks() {
     .select('p.*', 't.*')
 
     const taskResult = task.map(tr => {
-        if (tr.task_completd === 0) {
+        if (tr.task_completed === 0) {
             return {
                 task_id: tr.task_id,
                 task_description: tr.task_description,
@@ -35,7 +35,7 @@ async function createTask(task) {
     const [task_id] = await db('tasks').insert(task)
     const t = await db('tasks').where('task_id', task_id).first()
 
-    if (t.task_completd === 0) {
+    if (t.task_completed === 0) {
         return {
                 task_id: t.task_id,
                 task_description: t.task_description,

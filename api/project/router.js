@@ -15,7 +15,7 @@ router.get('/', async (req,res,next) => {
 
 router.post('/', async (req, res, next) => {
     try {
-        const createProject = await Project.create(req.body)
+        const createProject = await Project.createProject(req.body)
         if(createProject.project_completed === 0) {
             res.status(201).json({
                 project_id: createProject.project_id,
